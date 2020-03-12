@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenRA.GameRules;
 using OpenRA.Mods.Common;
 using OpenRA.Mods.Common.Effects;
 using OpenRA.Mods.Common.Traits.Render;
@@ -38,40 +39,43 @@ namespace OpenRA.Mods.YR.Warheads
         private Actor actor;
         private TypeDictionary typeDic;
         private string[] excludeActors;
-        public override void DoImpact(Target target, Actor firedBy, IEnumerable<int> damageModifiers)
-        {
-            if (!string.IsNullOrEmpty(ExcludeActor))
-            {
-                excludeActors = ExcludeActor.Split(',');
-            }
-            else
-            {
-                excludeActors = new string[0];
-            }
-            World w = firedBy.World;
-            WPos targetPos = target.CenterPosition;
-            var victimActors = w.FindActorsInCircle(targetPos, new WDist(1));
-            foreach (Actor victimActor in victimActors)
-            {
-                if (!victimActor.IsDead &&
-                    victimActor.TraitsImplementing<WithInfantryBody>().Count() > 0 &&
-                    !excludeActors.Contains(victimActor.Info.Name))
-                {
-                    victimActor.Kill(firedBy, DamageTypes);
 
-                    actor = firedBy;
-                    CPos pos = victimActor.World.Map.CellContaining(victimActor.CenterPosition);
+		public override void DoImpact(Target target, WarheadArgs args)
+		{
+			var firedBy = args.SourceActor;
 
-                    typeDic = new TypeDictionary()
-                    {
-                        new CenterPositionInit(targetPos),
-                        new LocationInit(pos),
-                        new OwnerInit(firedBy.Owner),
-                        new FacingInit(Facing)
-                    };
-                    w.CreateActor(Actor, typeDic);
-                }
-            }
-        }
+			if (!string.IsNullOrEmpty(ExcludeActor))
+			{
+				excludeActors = ExcludeActor.Split(',');
+			}
+			else
+			{
+				excludeActors = new string[0];
+			}
+			World w = firedBy.World;
+			WPos targetPos = target.CenterPosition;
+			var victimActors = w.FindActorsInCircle(targetPos, new WDist(1));
+			foreach (Actor victimActor in victimActors)
+			{
+				if (!victimActor.IsDead &&
+					victimActor.TraitsImplementing<WithInfantryBody>().Count() > 0 &&
+					!excludeActors.Contains(victimActor.Info.Name))
+				{
+					victimActor.Kill(firedBy, DamageTypes);
+
+					actor = firedBy;
+					CPos pos = victimActor.World.Map.CellContaining(victimActor.CenterPosition);
+
+					typeDic = new TypeDictionary()
+					{
+						new CenterPositionInit(targetPos),
+						new LocationInit(pos),
+						new OwnerInit(firedBy.Owner),
+						new FacingInit(Facing)
+					};
+					w.CreateActor(Actor, typeDic);
+				}
+			}
+		}
     }
 }

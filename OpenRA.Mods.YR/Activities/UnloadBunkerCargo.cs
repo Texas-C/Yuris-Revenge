@@ -91,7 +91,7 @@ namespace OpenRA.Mods.YR.Activities
 
 			// Find the cells that are blocked by transient actors
 			return cargo.CurrentAdjacentCells
-				.Where(c => pos.CanEnterCell(c, null, true) != pos.CanEnterCell(c, null, false));
+				.Where(c => pos.CanEnterCell(c, null) != pos.CanEnterCell(c, null));
 		}
 
 		public override bool Tick(Actor self)

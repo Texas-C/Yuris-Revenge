@@ -1,6 +1,6 @@
 Metadata:
 	Title: Red Alert 2 Yuri's Revenge
-	Version: release-20200202
+	Version: playtest-20200303
 	Website: https://github.com/cookgreen/yr
 	WebIcon32: https://raw.githubusercontent.com/cookgreen/yr/master/mods/yr/icon.png
 
@@ -80,7 +80,7 @@ Packages:
 
 MapFolders:
 	yr|maps: System
-	~^maps/yr/release-20200202: User
+	~^maps/yr/playtest-20200303: User
 
 Rules:
 	yr|rules/proxy-actors.yaml
@@ -149,6 +149,7 @@ Assemblies:
 
 ChromeLayout:
 	yr|chrome/mainmenu.yaml
+	common|chrome/mainmenu-prompts.yaml
 	yr|chrome/vxlbrowser.yaml
 	yr|chrome/soundplayer.yaml
 	common|chrome/ingame.yaml
@@ -246,6 +247,8 @@ Translations:
 
 LoadScreen: LogoStripeLoadScreen
 	Image: yr|uibits/loadscreen.png
+	Image2x: yr|uibits/loadscreen-2x.png
+	Image3x: yr|uibits/loadscreen-3x.png
 	Text: Carving wooden nickels..., Preparing paratroopers..., Welcoming you to Texas..., Optimizing helium mix..., Receiving thoughts..., Igniting boosters...
 
 ServerTraits:

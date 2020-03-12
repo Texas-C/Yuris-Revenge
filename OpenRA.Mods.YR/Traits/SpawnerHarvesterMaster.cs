@@ -290,11 +290,11 @@ namespace OpenRA.Mods.YR.Traits
 				return false;
 
 			var resType = resLayer.GetResource(cell);
-			if (resType == null)
+			if (resType == ResourceLayer.CellContents.Empty)
 				return false;
 
 			// Can the harvester collect this kind of resource?
-			return info.Resources.Contains(resType.Info.Type);
+			return info.Resources.Contains(resType.Type.Info.Type);
 		}
 
         void INotifyTransform.BeforeTransform(Actor self)

@@ -233,7 +233,7 @@ namespace OpenRA.Mods.YR.Traits
 			return new Order("Unload", self, queued);
 		}
 
-		bool IIssueDeployOrder.CanIssueDeployOrder(Actor self) { return true; }
+		bool IIssueDeployOrder.CanIssueDeployOrder(Actor self, bool queued) { return true; }
 
 		public void ResolveOrder(Actor self, Order order)
         {
@@ -477,7 +477,7 @@ namespace OpenRA.Mods.YR.Traits
                     var positionable = passenger.Trait<IPositionable>();
                     positionable.SetPosition(passenger, self.Location);
 
-                    if (!inAir && positionable.CanEnterCell(self.Location, self, false))
+                    if (!inAir && positionable.CanEnterCell(self.Location, self))
                     {
                         self.World.AddFrameEndTask(w => w.Add(passenger));
                         var nbm = passenger.TraitOrDefault<INotifyBlockingMove>();

@@ -103,8 +103,10 @@ namespace OpenRA.Mods.RA2.Traits
 					? body.LocalToWorld(info.LocalOffset.Rotate(body.QuantizeOrientation(self, self.Orientation)))
 					: info.LocalOffset;
 
-				weapon.Impact(Target.FromPos(self.CenterPosition + localoffset), self,
-					self.TraitsImplementing<IFirepowerModifier>().Select(a => a.GetFirepowerModifier()).ToArray());
+				WarheadArgs args = new WarheadArgs();
+				args.DamageModifiers = self.TraitsImplementing<IFirepowerModifier>().Select(a => a.GetFirepowerModifier()).ToArray();
+				args.SourceActor = self;
+				weapon.Impact(Target.FromPos(self.CenterPosition + localoffset), args);
 
 				if (weapon.Report != null && weapon.Report.Any())
 					Game.Sound.Play(SoundType.World, weapon.Report.Random(self.World.SharedRandom), self.CenterPosition);

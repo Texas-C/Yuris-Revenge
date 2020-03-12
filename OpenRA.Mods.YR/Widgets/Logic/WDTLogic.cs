@@ -65,8 +65,8 @@ namespace OpenRA.Mods.YR.Widgets.Logic
 		{
 			if (wdtData.Scenarios.Count > 0)
 			{
-				currentSprites = world.Map.Rules.Sequences.SpriteCache[wdtData.Scenarios[0].BackgroundImage];
-				currentFrame = 0;
+				//currentSprites = world.Map.Rules.Sequences.SpriteCache[wdtData.Scenarios[0].BackgroundImage];
+				//currentFrame = 0;
 			}
 		}
 	}

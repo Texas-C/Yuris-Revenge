@@ -71,8 +71,10 @@ namespace OpenRA.Mods.AS.Warheads
 			}
 		}
 
-		public override void DoImpact(Target target, Actor firedBy, IEnumerable<int> damageModifiers)
+		public override void DoImpact(Target target, WarheadArgs args)
 		{
+			var firedBy = args.SourceActor;
+
 			if (!target.IsValidFor(firedBy))
 				return;
 
@@ -136,59 +138,59 @@ namespace OpenRA.Mods.AS.Warheads
 					return;
 				}
 
-                Actor unit = null;
-                if (targetCells.Count() > 1)
-                {
-                    unit = firedBy.World.CreateActor(false, a.ToLowerInvariant(), td);
+				Actor unit = null;
+				if (targetCells.Count() > 1)
+				{
+					unit = firedBy.World.CreateActor(false, a.ToLowerInvariant(), td);
 
-                    while (cell.MoveNext())
-				    {
-					    if (unit.Trait<IPositionable>().CanEnterCell(cell.Current))
-					    {
-						    var cellpos = firedBy.World.Map.CenterOfCell(cell.Current);
-						    var pos = !ForceGround && cellpos.Z < target.CenterPosition.Z
-							    ? new WPos(cellpos.X, cellpos.Y, target.CenterPosition.Z)
-							    : cellpos;
+					while (cell.MoveNext())
+					{
+						if (unit.Trait<IPositionable>().CanEnterCell(cell.Current))
+						{
+							var cellpos = firedBy.World.Map.CenterOfCell(cell.Current);
+							var pos = !ForceGround && cellpos.Z < target.CenterPosition.Z
+								? new WPos(cellpos.X, cellpos.Y, target.CenterPosition.Z)
+								: cellpos;
 
-						    firedBy.World.AddFrameEndTask(w =>
-						    {
-							    w.Add(unit);
-							    if (Paradrop)
-								    unit.QueueActivity(new Parachute(unit));
-							    else
-								    unit.QueueActivity(new FallDown(unit, pos, FallRate));
+							firedBy.World.AddFrameEndTask(w =>
+							{
+								w.Add(unit);
+								if (Paradrop)
+									unit.QueueActivity(new Parachute(unit));
+								else
+									unit.QueueActivity(new FallDown(unit, pos, FallRate));
 
-							    var palette = Palette;
-							    if (UsePlayerPalette)
-								    palette += unit.Owner.InternalName;
+								var palette = Palette;
+								if (UsePlayerPalette)
+									palette += unit.Owner.InternalName;
 
-							    if (Image != null)
-								    w.Add(new SpriteEffect(pos, w, Image, Sequence, palette));
+								if (Image != null)
+									w.Add(new SpriteEffect(pos, w, Image, Sequence, palette));
 
-							    var sound = Sounds.RandomOrDefault(Game.CosmeticRandom);
-							    if (sound != null)
-								    Game.Sound.Play(SoundType.World, sound, pos);
-						    });
-						    placed = true;
-						    break;
-					    }
-                    }
-                }
-                else
-                {
-                    td.Add(new LocationInit(firedBy.World.Map.CellContaining(target.CenterPosition)));
-                    td.Add(new CenterPositionInit(target.CenterPosition));
+								var sound = Sounds.RandomOrDefault(Game.CosmeticRandom);
+								if (sound != null)
+									Game.Sound.Play(SoundType.World, sound, pos);
+							});
+							placed = true;
+							break;
+						}
+					}
+				}
+				else
+				{
+					td.Add(new LocationInit(firedBy.World.Map.CellContaining(target.CenterPosition)));
+					td.Add(new CenterPositionInit(target.CenterPosition));
 
-                    unit = firedBy.World.CreateActor(false, a.ToLowerInvariant(), td);
+					unit = firedBy.World.CreateActor(false, a.ToLowerInvariant(), td);
 
-                    firedBy.World.AddFrameEndTask(w =>
-                    {
-                        w.Add(unit);
-                    });
-                    placed = true;
-                }
+					firedBy.World.AddFrameEndTask(w =>
+					{
+						w.Add(unit);
+					});
+					placed = true;
+				}
 
-                if (!placed)
+				if (!placed)
 					unit.Dispose();
 			}
 		}

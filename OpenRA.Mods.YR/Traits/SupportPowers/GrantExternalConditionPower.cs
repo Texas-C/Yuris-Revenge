@@ -164,7 +164,7 @@ namespace OpenRA.Mods.YR.Traits
 				foreach (var unit in power.UnitsInRange(xy))
 				{
 					var bounds = unit.TraitsImplementing<IDecorationBounds>().FirstNonEmptyBounds(unit, wr);
-					yield return new SelectionBoxRenderable(unit, bounds, OpenRA.Primitives.Color.Red);
+					yield return new SelectionBoxAnnotationRenderable(unit, bounds, OpenRA.Primitives.Color.Red);
 				}
 			}
 
@@ -190,6 +190,11 @@ namespace OpenRA.Mods.YR.Traits
             {
                 return true;
             }
-        }
+
+			public IEnumerable<IRenderable> RenderAnnotations(WorldRenderer wr, World world)
+			{
+				throw new System.NotImplementedException();
+			}
+		}
 	}
 }

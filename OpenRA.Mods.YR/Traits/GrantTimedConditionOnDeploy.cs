@@ -114,11 +114,6 @@ namespace OpenRA.Mods.RA2.Traits
 			return new Order("GrantTimedConditionOnDeploy", self, queued);
 		}
 
-		bool IIssueDeployOrder.CanIssueDeployOrder(Actor self)
-		{
-			return true;
-		}
-
 		IEnumerable<IOrderTargeter> IIssueOrder.Orders
 		{
 			get { yield return new DeployOrderTargeter("GrantTimedConditionOnDeploy", 5,
@@ -258,6 +253,11 @@ namespace OpenRA.Mods.RA2.Traits
         public Primitives.Color GetColor()
         {
             return deployState == TimedDeployState.Charging ? info.ChargingColor : info.DischargingColor;
-        }
-    }
+		}
+
+		public bool CanIssueDeployOrder(Actor self, bool queued)
+		{
+			return true;
+		}
+	}
 }

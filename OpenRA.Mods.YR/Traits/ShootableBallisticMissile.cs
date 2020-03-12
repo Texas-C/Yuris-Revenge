@@ -54,7 +54,7 @@ namespace OpenRA.Mods.YR.Traits
 		// set by spawned logic, not this.
 		public int GetInitialFacing() { return 0; }
 
-		public bool CanEnterCell(World world, Actor self, CPos cell, SubCell subCell = SubCell.FullCell, Actor ignoreActor = null, bool checkTransientActors = true)
+		public bool CanEnterCell(World world, Actor self, CPos cell, SubCell subCell = SubCell.FullCell, Actor ignoreActor = null, BlockedByActor check = BlockedByActor.All)
 		{
 			return false;
 		}
@@ -77,6 +77,8 @@ namespace OpenRA.Mods.YR.Traits
 		[Sync]
 		public WPos CenterPosition { get; private set; }
 		public CPos TopLeft { get { return self.World.Map.CellContaining(CenterPosition); } }
+
+		Locomotor Locomotor;
 
 		bool airborne;
 		int airborneToken = ConditionManager.InvalidConditionToken;
@@ -103,6 +105,8 @@ namespace OpenRA.Mods.YR.Traits
 		{
 			conditionManager = self.TraitOrDefault<ConditionManager>();
 			speedModifiers = self.TraitsImplementing<ISpeedModifier>().ToArray().Select(sm => sm.GetSpeedModifier());
+			Locomotor = self.World.WorldActor.TraitsImplementing<Locomotor>()
+				.Single();
 		}
 
 		public void AddedToWorld(Actor self)
@@ -247,16 +251,6 @@ namespace OpenRA.Mods.YR.Traits
 			OnAirborneAltitudeLeft();
         }
 
-		public Activity MoveTo(CPos cell, int nearEnough, Primitives.Color? targetLineColor = null)
-        {
-            return new ShootableBallisticMissileFly(self, Target.FromCell(self.World, cell));
-        }
-
-		public Activity MoveTo(CPos cell, Actor ignoreActor, Primitives.Color? targetLineColor = null)
-        {
-            return new ShootableBallisticMissileFly(self, Target.FromCell(self.World, cell));
-        }
-
 		public Activity MoveIntoWorld(Actor self, int delay = 0)
         {
             return null;
@@ -335,6 +329,21 @@ namespace OpenRA.Mods.YR.Traits
 		public Activity ReturnToCell(Actor self)
 		{
 			return null;
+		}
+
+		public Activity MoveTo(CPos cell, int nearEnough = 0, Actor ignoreActor = null, bool evaluateNearestMovableCell = false, Color? targetLineColor = null)
+		{
+			return new ShootableBallisticMissileFly(self, Target.FromCell(self.World, cell));
+		}
+
+		public bool CanEnterCell(CPos location, Actor ignoreActor = null, BlockedByActor check = BlockedByActor.All)
+		{
+			return GetAvailableSubCell(location, SubCell.Any, ignoreActor, check) != SubCell.Invalid;
+		}
+
+		public SubCell GetAvailableSubCell(CPos location, SubCell preferredSubCell = SubCell.Any, Actor ignoreActor = null, BlockedByActor check = BlockedByActor.All)
+		{
+			return Locomotor.GetAvailableSubCell(self, location, check, preferredSubCell);
 		}
 	}
 }
