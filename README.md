@@ -7,7 +7,7 @@ A Red Alert 2 Yuri's Revenge mod for OpenRA Engine
 ![Voxel browser](https://media.moddb.com/images/members/4/3399/3398047/voxelbrowser.PNG)
 
 ## Version
-release-20200202
+playtest-20200303
 
 ## Build
 ### Windows
