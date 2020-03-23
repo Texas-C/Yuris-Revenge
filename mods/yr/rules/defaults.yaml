@@ -227,6 +227,12 @@
 		ReferencePoint: Bottom, Right
 		RequiresCondition: rank-elite
 		ZOffset: 256
+        
+^AffectedByIndustrialPlant:
+	ProductionCostMultiplier@INDUSTRAL_PLANT:
+		Multiplier: 75
+		Prerequisites: naindp
+		Queue: Ship, Vehicle
 
 ^CrateStatModifiers:
 	FirepowerMultiplier@CRATES:
@@ -732,6 +738,7 @@
 		Types: Infantry
 	Crushable:
 		CrushSound: igensqua.wav
+	EdibleByLeap:
 	Guard:
 		Voice: Attack
 	Guardable:
@@ -757,7 +764,7 @@
 	Repairable:
 		RepairActors: cahosp
 		Voice: Move
-	Chronoshiftable:
+	ChronoshiftableWithSpriteEffect:
 		ExplodeInstead: true
 	MapEditorData:
 		Categories: Infantry
@@ -900,6 +907,7 @@
 	Inherits@4: ^ChronoDisable
 	Inherits@5: ^CrateStatModifiers
 	Inherits@6: ^Tractable
+	Inherits@7: ^AffectedByIndustrialPlant
 	OwnerLostAction:
 		Action: Kill
 	Mobile:
@@ -1033,9 +1041,17 @@
 	Inherits@1: ^NeutralAircraft
 	Inherits@2: ^GainsExperience
 	WithTextControlGroupDecoration:
+	ChronoshiftableWithSpriteEffect:
+		Image: chrono
+		WarpInSequence: warpin
+		WarpOutSequence: warpout
+		ChronoshiftSound: schrmov.wav
+		ReturnToOrigin: false
+		RequiresCondition: !airborne
 
 ^Plane:
-	Inherits: ^Aircraft
+	Inherits@1: ^Aircraft
+	Inherits@2: ^AffectedByIndustrialPlant
 	Aircraft:
 		CruiseAltitude: 5600
 		CruisingCondition: cruising
