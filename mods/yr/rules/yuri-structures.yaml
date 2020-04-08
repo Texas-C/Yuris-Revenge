@@ -203,7 +203,7 @@ yarefn:
 		Prerequisites: power, ~structures.yuris
 		Description: Provides credits for Yuri
 	Selectable:
-		Bounds: 70, 50, 0, -20
+		Bounds: 90, 60, 0, -20
 	Valued:
 		Cost: 1500
 	Tooltip:
@@ -234,6 +234,10 @@ yarefn:
 		DeployCursor: undeploy
 	CustomSellValue:
 		Value: 300
+	#SlaveMinerMaster:
+	#	Actors: slav, slav, slav, slav, slav
+	#	SpawnAllAtOnce: True
+	#	Resources: Ore,Gems,Tiberium
 	InfiltrateForCash:
 		Types: SpyInfiltrate
 		Percentage: 50
@@ -249,10 +253,6 @@ yarefn:
 	GrantConditionOnDeploy:
 		DeployedCondition: deploy
 		UndeployedCondition: undeploy
-	SpawnerRefineryMaster:
-		Actors: slav, slav, slav, slav, slav
-		SpawnAllAtOnce: True
-		Resources: Ore,Gems,Tiberium
 
 yaweap:
 	Inherits: ^Building
@@ -969,13 +969,17 @@ naclon:
 		SpawnOffset: 0,0,0
 		ExitCell: 2, 2
 	Production:
-		Produces: Dummy
+		Produces: Infantry
 	RallyPoint:
 		Offset: 3,3
 		Palette: mouse
 		IsPlayerPalette: false
 	ClonesProducedUnits:
 		CloneableTypes: infantry
+	AcceptsDeliveredCash:
+	SpawnSurvivors:
+		DeathTypes: ExplosionDeath, BulletDeath
+		Actors: init, init, init, init
 
 napsis:
 	Inherits: ^Building
