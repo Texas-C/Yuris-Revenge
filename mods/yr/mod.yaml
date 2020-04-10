@@ -145,6 +145,7 @@ Cursors:
 
 Chrome:
 	yr|chrome.yaml
+	yr|chrome-wdt.yaml
 
 Assemblies:
 	common|OpenRA.Mods.Common.dll
@@ -198,7 +199,7 @@ ChromeLayout:
 	common|chrome/confirmation-dialogs.yaml
 	common|chrome/editor.yaml
 	common|chrome/playerprofile.yaml
-	yr|chrome/wd.yaml
+	yr|chrome/wdtbrowser.yaml
     
 Hotkeys:
 	common|hotkeys/game.yaml
@@ -268,35 +269,35 @@ Fonts:
 	Regular:
 		Font: common|FreeSans.ttf
 		Size: 14
-		Ascender: 8
+		Ascender: 11
 	Bold:
 		Font: common|FreeSansBold.ttf
 		Size: 14
-		Ascender: 8
+		Ascender: 11
 	Title:
 		Font: common|FreeSansBold.ttf
 		Size: 32
-		Ascender: 9
+		Ascender: 24
 	BigBold:
 		Font: common|FreeSansBold.ttf
 		Size: 24
-		Ascender: 11
+		Ascender: 18
 	MediumBold:
 		Font: common|FreeSansBold.ttf
 		Size: 18
-		Ascender: 11
+		Ascender: 14
 	Small:
 		Font: common|FreeSans.ttf
 		Size: 12
-		Ascender: 14
+		Ascender: 9
 	Tiny:
 		Font: common|FreeSans.ttf
 		Size: 10
-		Ascender: 18
+		Ascender: 8
 	TinyBold:
 		Font: common|FreeSansBold.ttf
 		Size: 10
-		Ascender: 26
+		Ascender: 8
 
 Missions:
 	yr|missions.yaml

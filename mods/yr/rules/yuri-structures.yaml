@@ -43,10 +43,6 @@ yacnst:
 	GrantConditionOnPrerequisite@GLOBALFACTUNDEPLOY:
 		Condition: factundeploy
 		Prerequisites: global-factundeploy
-	ProductionQueue@Building:
-		Type: Building
-	ProductionQueue@Support:
-		Type: Support
 	ProductionBar@Building:
 		ProductionType: Building
 	ProductionBar@Support:
@@ -182,9 +178,9 @@ yabrck:
 	Exit@2_2:
 		SpawnOffset: -170,810,0
 		ExitCell: 2, 2
-	WithIdleOverlay@training:
-		Sequence: idle-training
-		RequiresCondition: !build-incomplete
+	#WithIdleOverlay@training: #TODO: Grant a condition when producing a unit
+	#	Sequence: idle-training
+	#	RequiresCondition: !build-incomplete
 	Power:
 		Amount: -10
 	InfiltrateForSupportPower:
